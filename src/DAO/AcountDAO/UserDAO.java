@@ -22,4 +22,5 @@ public interface UserDAO {
 	public int getUserNumbers() throws SQLException;
 	//查找所有
 	public List<User> findAll()throws SQLException;
+	public int getId(User user);
 }

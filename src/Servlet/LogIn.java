@@ -37,14 +37,14 @@ public class LogIn extends HttpServlet {
 			user = userDAO.findByAccount(email, passWord);
 			if (user.getId() != 0){ //用户存在，且登录成功
 
-//				request.setAttribute("User", user);     // 把user作为属性像下一个页面传递
-//				request.getRequestDispatcher();
+				request.setAttribute("user", user);     // 把user作为属性像下一个页面传递
+				request.getRequestDispatcher("UserCenter.jsp").forward(request, response);
 			}else{   // 用户不存在
 				System.out.println("用户不存在");
 				int flag = 1;
 				request.setAttribute("flag", flag);
 
-				request.getRequestDispatcher("log_sign_game/LogFailed.jsp").forward(request, response);
+				request.getRequestDispatcher("log_sign_game/LogSignFailed.jsp").forward(request, response);
 				System.out.println("已转发");
 
 			}
@@ -53,7 +53,7 @@ public class LogIn extends HttpServlet {
 			System.out.println("数据库连接失败");
 			int flag = 2;
 			request.setAttribute("flag", flag);
-			request.getRequestDispatcher("log_sign_game/LogFailed.jsp");
+			request.getRequestDispatcher("log_sign_game/LogSignFailed.jsp");
 		}
 
 

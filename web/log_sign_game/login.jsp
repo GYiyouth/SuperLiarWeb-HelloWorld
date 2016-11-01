@@ -9,7 +9,38 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <%
 
+    %>
+    <script type="text/javascript">
+        /**
+         * 检查输入的信息是否规范
+         * @returns {boolean}
+         */
+        function check() {
+            var email = login.email.value;
+            var password = login.passWord.value;
+            if (email == "邮箱登录" ) {
+                alert("请输入邮箱");
+                return false;
+            }
+
+//            if (!email.contains("@")){
+//                alert("邮箱格式有误");
+//                return false;
+//            }
+            if (password == "密码") {
+                alert("请输入密码");
+                return false;
+            }
+//            alert(email + password);
+        }
+
+        function goSignUp(){
+            window.location.href="signup.jsp";
+        }
+
+    </script>
     <title>SuperLiar 登录</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
@@ -56,6 +87,7 @@
         $axure.utils.getOtherPath = function() { return './resources/Other.html'; };
         $axure.utils.getReloadPath = function() { return './resources/reload.html'; };
     </script>
+
 </head>
 <body>
 <div id="base" class="">
@@ -77,7 +109,7 @@
 
 <%--输入的表单在这！！！名字是 email passWord--%>
 
-    <form method="post" action="../Servlet.LogIn" name="login">
+    <form method="post" action="../Servlet.LogIn" name="login" onSubmit="return check()" accept-charset="UTF-8">
         <!-- userNameBox (Group) -->
         <div id="u302" class="ax_default" data-label="userNameBox" data-width="240" data-height="34">
 
@@ -92,7 +124,7 @@
 
             <!-- Email (Text Field) -->
             <div id="u305" class="ax_default text_field">
-                <input id="u305_input" type="email" value="" maxlength="32" name="email"/>
+                <input id="u305_input" type="email" value="" maxlength="32" name="email" />
             </div>
         </div>
         <!-- passWordBox (Group) -->
@@ -115,7 +147,7 @@
         </div>
 
 
-    </div>
+    <%--</div>--%>
     <button type="submit" >
     <!-- goLog (Rectangle) -->
     <div id="u306" class="ax_default primary_button" data-label="goLog">
@@ -134,7 +166,7 @@
 
 
     <!-- goSign (Rectangle) -->
-    <div id="u308" class="ax_default primary_button" data-label="goSign">
+    <div id="u308" class="ax_default primary_button" data-label="goSign" onclick="return goSignUp()">
         <div id="u308_div" class=""></div>
         <!-- Unnamed () -->
         <div id="u309" class="text">
@@ -143,7 +175,7 @@
     </div>
 
     <!-- Unnamed (Rectangle) -->
-    <div id="u310" class="ax_default link_button">
+    <div id="u310" class="ax_default link_button" >
         <div id="u310_div" class=""></div>
         <!-- Unnamed () -->
         <div id="u311" class="text">

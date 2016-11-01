@@ -8,6 +8,49 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
+    <script type="text/javascript">
+        function check() {
+            var email = sign.email.value;
+            var emailRe = /^\w{1,32}(?:@(?!-))(?:(?:[a-z0-9-]*)(?:[a-z0-9](?!-))(?:\.(?!-)))+[a-z]{2,5}$/;
+            var password1 = sign.passWord1.value;
+            var password2 = sign.passWord2.value;
+            var passWordRe = /.{6,32}/;
+            var nickedName = sign.nickedName.value;
+            var phoneNumber = sign.phoneNumber.value;
+            var phoneRe = /\+?[0-9]{11,14}/;
+            var year = sign.year.value;
+            var monthDay = sign.monthDay.value;
+            if (email == "邮箱" || nickedName == "昵称" || password1 == "密码" || password2 == "重复密码"){
+                alert("有信息没有输入哦");
+                return false;
+            }
+            if (password1 != password2) {
+                alert("两次密码输入不匹配");
+                return false;
+            }
+            if (!passWordRe.test(password1)){
+                alert("密码格式不正确，请输入至少6位");
+                return false;
+            }
+            if (!emailRe.test(email)){
+                alert("邮箱格式不正确，请再检查一遍");
+                return false;
+            }
+            if(phoneNumber != "手机号") {
+                if (!phoneRe.test(phoneNumber)) {
+                    alert("手机号格式检查不正确，请再检查一遍");
+                    return false;
+                }
+            }
+            if (year >= 2016 || year < 1900 ){
+                alert("年龄是不是说谎了呢？");
+                return false;
+            }
+//            alert("正在尝试注册");
+            return true;
+
+        }
+    </script>
     <title>注册</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
@@ -67,6 +110,7 @@
         </div>
     </div>
 
+<form name="sign" action="../Servlet.Sign" method="post" accept-charset="UTF-8" onsubmit="return check()">
     <!-- eMailBox (Group) -->
     <div id="u321" class="ax_default" data-label="eMailBox" data-width="240" data-height="34">
 
@@ -81,7 +125,7 @@
 
         <!-- Unnamed (Text Field) -->
         <div id="u324" class="ax_default text_field">
-            <input id="u324_input" type="email" value="" maxlength="255"/>
+            <input id="u324_input" type="email" value="" maxlength="255" name="email"/>
         </div>
     </div>
 
@@ -99,7 +143,7 @@
 
         <!-- Unnamed (Text Field) -->
         <div id="u328" class="ax_default text_field">
-            <input id="u328_input" type="password" value="" maxlength="32"/>
+            <input id="u328_input" type="password" value="" maxlength="32" name="passWord1"/>
         </div>
     </div>
 
@@ -117,7 +161,7 @@
 
         <!-- Unnamed (Text Field) -->
         <div id="u332" class="ax_default text_field">
-            <input id="u332_input" type="password" value="" maxlength="32"/>
+            <input id="u332_input" type="password" value="" maxlength="32" name="passWord2"/>
         </div>
     </div>
 
@@ -135,7 +179,7 @@
 
         <!-- Unnamed (Text Field) -->
         <div id="u336" class="ax_default text_field">
-            <input id="u336_input" type="text" value="" maxlength="255"/>
+            <input id="u336_input" type="text" value="" maxlength="255" name="nickedName"/>
         </div>
     </div>
 
@@ -171,7 +215,7 @@
 
         <!-- Unnamed (Text Field) -->
         <div id="u344" class="ax_default text_field">
-            <input id="u344_input" type="tel" value="" maxlength="18"/>
+            <input id="u344_input" type="tel" value="" maxlength="18" name="phoneNumber"/>
         </div>
     </div>
 
@@ -189,7 +233,7 @@
 
         <!-- Unnamed (Text Field) -->
         <div id="u348" class="ax_default text_field">
-            <input id="u348_input" type="number" value="" maxlength="18"/>
+            <input id="u348_input" type="text" value="" maxlength="18" name="year"/>
         </div>
     </div>
 
@@ -207,7 +251,7 @@
 
         <!-- Unnamed (Text Field) -->
         <div id="u352" class="ax_default text_field">
-            <input id="u352_input" type="text" value="" maxlength="18"/>
+            <input id="u352_input" type="text" value="" maxlength="18" name="monthDay"/>
         </div>
     </div>
 
@@ -221,6 +265,7 @@
     </div>
 
     <!-- goSign (Rectangle) -->
+    <button type="submit">
     <div id="u355" class="ax_default primary_button" data-label="goSign">
         <div id="u355_div" class=""></div>
         <!-- Unnamed () -->
@@ -228,7 +273,7 @@
             <p><span>注册</span></p>
         </div>
     </div>
-
+    </button>
     <!-- gySign (Group) -->
     <div id="u357" class="ax_default" data-label="gySign" data-width="510" data-height="76">
 
@@ -250,6 +295,7 @@
             </div>
         </div>
     </div>
+</form>
 </div>
 </body>
 </html>

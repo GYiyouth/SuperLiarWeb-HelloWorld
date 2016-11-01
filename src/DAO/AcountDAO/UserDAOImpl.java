@@ -2,6 +2,7 @@ package DAO.AcountDAO;
 
 import DAO.com.util.db.DBUtils;
 import DAO.AcountDAO.VO.User;
+import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -14,6 +15,7 @@ import java.util.List;
  */
 public class UserDAOImpl implements UserDAO {
 	/**
+	 * 先检查用户是否已经存在，存在返回0
 	 * 添加用户，同时为他创建他的游戏table，table名字为 "Game" + UserId
 	 * @param user
 	 * @return
@@ -21,6 +23,15 @@ public class UserDAOImpl implements UserDAO {
 	 */
 	@Override
 	public int add(User user) throws SQLException {
+		String email = user.getEmail();
+		String passWord = user.getPassword();
+		try{
+			if (check(email, passWord))
+				return 0;
+		}catch (SQLException e){
+			e.printStackTrace();
+			return 0;
+		}
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		String sql = "insert into sys.User(Email,PassWord,nickedName, CreatedTime) values(?,?,?,?);";
@@ -32,9 +43,13 @@ public class UserDAOImpl implements UserDAO {
 			preparedStatement.setString(3, user.getNickedName());
 			preparedStatement.setString(4, user.getCreatedTime());
 			preparedStatement.executeUpdate();
-			createGameTable(user);
-			return getUserNumbers();
-		}catch (SQLException e){
+			user.setId(getId(user));
+//			createGameTable(user);
+			return user.getId();
+		}catch (MySQLIntegrityConstraintViolationException e1){ // 用户已经存在
+			return 0;
+		}
+		catch (SQLException e){
 			e.printStackTrace();
 			throw new SQLException("添加数据失败");
 
@@ -43,8 +58,13 @@ public class UserDAOImpl implements UserDAO {
 
 		}
 	}
-	/***
+
+	/**
 	 * 根据邮箱和密码检查用户是否已经存在，不存在或者失败返回false
+	 * @param email
+	 * @param password
+	 * @return
+	 * @throws SQLException
 	 */
 	@Override
 	public boolean check(String email, String password) throws SQLException{
@@ -60,17 +80,13 @@ public class UserDAOImpl implements UserDAO {
 //			boolean exist = preparedStatement.execute();
 			preparedStatement.execute();
 			resultSet = preparedStatement.getResultSet();
-
-
 			if (resultSet.next())
 				return true;
 			else
 				return false;
 		}catch (SQLException e){
 			e.printStackTrace();
-//			throw new SQLException("用户不存在");
 			throw new SQLException("check函数连接数据库失败");
-//			return false;
 		}finally {
 			DBUtils.close(resultSet, preparedStatement, connection);
 		}
@@ -95,8 +111,8 @@ public class UserDAOImpl implements UserDAO {
 			preparedStatement.setString(1, column);
 			preparedStatement.setString(2, value);
 			preparedStatement.setInt(3, id);
-			boolean exist = preparedStatement.execute();
-			return exist;
+			int num = preparedStatement.executeUpdate();
+			return (num > 0);
 		}catch (SQLException e){
 
 			e.printStackTrace();
@@ -122,8 +138,8 @@ public class UserDAOImpl implements UserDAO {
 			preparedStatement = connection.prepareStatement(sql);
 			preparedStatement.setString(1, PassWord);
 			preparedStatement.setInt(2, id);
-			boolean exist = preparedStatement.execute();
-			return exist;
+			int num = preparedStatement.executeUpdate();
+			return (num == 1);
 		}catch (SQLException e){
 			e.printStackTrace();
 			return false;
@@ -148,8 +164,8 @@ public class UserDAOImpl implements UserDAO {
 			preparedStatement = connection.prepareStatement(sql);
 			preparedStatement.setString(1, nickedName);
 			preparedStatement.setInt(2, id);
-			boolean exist = preparedStatement.execute();
-			return exist;
+			int num = preparedStatement.executeUpdate();
+			return (num == 1);
 		}catch (SQLException e){
 			e.printStackTrace();
 			return false;
@@ -184,19 +200,20 @@ public class UserDAOImpl implements UserDAO {
 				return null;
 			resultSet = preparedStatement.getResultSet();
 			User user = new User();
-			user.setEmail(resultSet.getString(1));
-			user.setId(resultSet.getInt(2));
-			user.setPassword(resultSet.getString(3));
-			user.setSex(resultSet.getString(4));
-			user.setCreatedTime(resultSet.getString(5));
-			user.setGameNumbers(resultSet.getInt(6));
-			user.setGameTableId(resultSet.getString(7));
-			user.setPhoneNumber(resultSet.getString(8));
-			user.setTotalGames(resultSet.getInt(9));
-			user.setWinNumbers(resultSet.getInt(10));
-			user.setBackup2(resultSet.getString(11));
-			user.setBackup3(resultSet.getString(12));
-			user.setBackup4(resultSet.getString(13));
+			user.setEmail(resultSet.getString("Email"));
+			user.setId(resultSet.getInt("id"));
+			user.setPassword(resultSet.getString("PassWord"));
+			user.setNickedName(resultSet.getString("nickedName"));
+			user.setSex(resultSet.getString("Sex"));
+			user.setCreatedTime(resultSet.getString("CreatedTime"));
+			user.setGameNumbers(resultSet.getInt("GameNumbers"));
+			user.setGameTableId(resultSet.getString("GameTableId"));
+			user.setPhoneNumber(resultSet.getString("PhoneNumber"));
+			user.setTotalGames(resultSet.getInt("TotalGames"));
+			user.setWinNumbers(resultSet.getInt("WinNumbers"));
+			user.setBackup2(resultSet.getString("Backup2"));
+			user.setBackup3(resultSet.getString("Backup3"));
+			user.setBackup4(resultSet.getString("Backup4"));
 			return user;
 		}catch (SQLException e){
 			e.printStackTrace();
@@ -233,19 +250,20 @@ public class UserDAOImpl implements UserDAO {
 			}
 
 			User user = new User();
-			user.setEmail(resultSet.getString(1));
-			user.setId(resultSet.getInt(2));
-			user.setPassword(resultSet.getString(3));
-			user.setSex(resultSet.getString(4));
-			user.setCreatedTime(resultSet.getString(5));
-			user.setGameNumbers(resultSet.getInt(6));
-			user.setGameTableId(resultSet.getString(7));
-			user.setPhoneNumber(resultSet.getString(8));
-			user.setTotalGames(resultSet.getInt(9));
-			user.setWinNumbers(resultSet.getInt(10));
-			user.setBackup2(resultSet.getString(11));
-			user.setBackup3(resultSet.getString(12));
-			user.setBackup4(resultSet.getString(13));
+			user.setEmail(resultSet.getString("Email"));
+			user.setId(resultSet.getInt("id"));
+			user.setPassword(resultSet.getString("PassWord"));
+			user.setNickedName(resultSet.getString("nickedName"));
+			user.setSex(resultSet.getString("Sex"));
+			user.setCreatedTime(resultSet.getString("CreatedTime"));
+			user.setGameNumbers(resultSet.getInt("GameNumbers"));
+			user.setGameTableId(resultSet.getString("GameTableId"));
+			user.setPhoneNumber(resultSet.getString("PhoneNumber"));
+			user.setTotalGames(resultSet.getInt("TotalGames"));
+			user.setWinNumbers(resultSet.getInt("WinNumbers"));
+			user.setBackup2(resultSet.getString("Backup2"));
+			user.setBackup3(resultSet.getString("Backup3"));
+			user.setBackup4(resultSet.getString("Backup4"));
 			return user;
 		}catch (SQLException e){
 			e.printStackTrace();
@@ -264,13 +282,15 @@ public class UserDAOImpl implements UserDAO {
 	synchronized public int getUserNumbers() throws SQLException {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
-//		ResultSet resultSet = null;
+		ResultSet resultSet = null;
 		String sql = "select count(*)from sys.User;";
 		int num = 0;
 		try {
 			connection = DBUtils.getConnetction();
 			preparedStatement = connection.prepareStatement(sql);
-			num = preparedStatement.executeUpdate();
+			resultSet = preparedStatement.executeQuery();
+			resultSet.next();
+			num = resultSet.getInt(1);
 		}catch (SQLException e){
 			e.printStackTrace();
 			throw new SQLException("查询总用户数失败");
@@ -291,17 +311,44 @@ public class UserDAOImpl implements UserDAO {
 		try {
 			connection = DBUtils.getConnetction();
 			preparedStatement = connection.prepareStatement(sql);
-			preparedStatement.setString(1, "Game" + user.getId());
-			boolean flag = preparedStatement.execute();
-			if (flag)
-				return;
-			else
-				throw new SQLException("建立GameTable失败");
+			String name = "Game"+user.getId();
+			preparedStatement.setString(1, name);
+			preparedStatement.execute();
+//			if (flag)
+//				return;
+//			else
+//				throw new SQLException("建立GameTable失败");
 		}catch (SQLException e){
 			e.printStackTrace();
 		}finally {
 			DBUtils.close(null, preparedStatement, connection);
 		}
+	}
+
+	/**
+	 * 返回用户的id
+	 * @param user
+	 * @return
+	 */
+	@Override
+	public int getId(User user) {
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		String sql = "select id from sys.User where Email = ? and PassWord = ?;";
+		try {
+			connection = DBUtils.getConnetction();
+			preparedStatement = connection.prepareStatement(sql);
+			preparedStatement.setString(1, user.getEmail());
+			preparedStatement.setString(2, user.getPassword());
+			resultSet = preparedStatement.executeQuery();
+			resultSet.next();
+			int id = resultSet.getInt(1);
+			return id;
+		}catch (SQLException e){
+			e.printStackTrace();
+		}
+		return 0;
 	}
 
 	@Override

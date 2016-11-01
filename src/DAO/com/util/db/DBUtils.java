@@ -68,15 +68,15 @@ public class DBUtils {
 		}
 	}
 
-	public static void main(String[] args){
-		UserDAO userDAO = new UserDAOImpl();
-		try {
-
-			User user = userDAO.findByAccount("1", "2");
-			System.out.println(user.getId());
-			System.out.println(userDAO.check("1", "1"));
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	}
+//	public static void main(String[] args){
+//		UserDAO userDAO = new UserDAOImpl();
+//		try {
+//
+//			User user = userDAO.findByAccount("1", "2");
+//			System.out.println(user.getId());
+//			System.out.println(userDAO.check("1", "1"));
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//		}
+//	}
 }

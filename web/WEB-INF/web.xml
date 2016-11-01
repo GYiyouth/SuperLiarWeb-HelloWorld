@@ -17,12 +17,21 @@
         <servlet-name>LogIn</servlet-name>
         <url-pattern>/Servlet.LogIn</url-pattern>
     </servlet-mapping>
-
     <servlet>
         <servlet-name>LogIn</servlet-name>
         <servlet-class>Servlet.LogIn</servlet-class>
     </servlet>
 
+
+
+    <servlet-mapping>
+        <servlet-name>Sign</servlet-name>
+        <url-pattern>/Servlet.Sign</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>Sign</servlet-name>
+        <servlet-class>Servlet.Sign</servlet-class>
+    </servlet>
 
 
     <welcome-file-list>

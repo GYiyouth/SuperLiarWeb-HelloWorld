@@ -31,12 +31,18 @@
         alert("数据库连接失败，请联系葛尧");
         window.location.href="log_sign_game/login2.jsp";
     }
+    function failSign() {
+        alert("注册失败");
+        window.location.href="log_sign_game/signup.jsp"
+    }
     <%if(flag==0){%>
     success1();
-    <%}else if(flag==1){%>
+    <%}if(flag==1){%>
     failAccount();
-    <%}else{%>
+    <%}if (flag==2){%>
     failSQL();
+    <%}if (flag==3){%>
+    failSign();
     <%}%>
 
 </script>

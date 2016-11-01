@@ -4,6 +4,7 @@ import DAO.AcountDAO.UserDAO;
 import DAO.AcountDAO.UserDAOImpl;
 import com.sun.istack.internal.Nullable;
 import smallTools.Time;
+import smallTools.TimeImpl;
 
 import java.sql.SQLException;
 
@@ -140,28 +141,28 @@ public class User {
 		Backup4 = backup4;
 	}
 
-	public User(String email, String password, String nickedName,
-	            @Nullable String phoneNumber, @Nullable String sex) throws SQLException {
-		Email = email;
-
-		Password = password;
-		this.nickedName = nickedName;
-		this.Sex = sex;
-		CreatedTime = getDATE();
-		GameNumbers = 0;
-		GameTableId = "" + this.id;
-		PhoneNumber = phoneNumber;
-		TotalGames = 0;
-		WinNumbers = 0;
-		UserDAO userDAO = new UserDAOImpl();
-		try {
-			userDAO.add(this);
-		}catch (SQLException e){
-			e.printStackTrace();
-			throw new SQLException("创建用户失败，请联系管理员，邮箱在下部");
-		}
-		this.id = getRows();
-	}
+//	public User(String email, String password, String nickedName,
+//	            @Nullable String phoneNumber, @Nullable String sex) throws SQLException {
+//		Email = email;
+//
+//		Password = password;
+//		this.nickedName = nickedName;
+//		this.Sex = sex;
+//		CreatedTime = getDATE();
+//		GameNumbers = 0;
+//		GameTableId = "" + this.id;
+//		PhoneNumber = phoneNumber;
+//		TotalGames = 0;
+//		WinNumbers = 0;
+//		UserDAO userDAO = new UserDAOImpl();
+//		try {
+//			userDAO.add(this);
+//		}catch (SQLException e){
+//			e.printStackTrace();
+//			throw new SQLException("创建用户失败，请联系管理员，邮箱在下部");
+//		}
+//		this.id = getRows();
+//	}
 	public User(){
 		super();
 	}
@@ -171,13 +172,8 @@ public class User {
 	 * */
 
 	private String getDATE(){
-		String year = "" + Time.getYear();
-		int month = Time.getMonth();
-		String mon = "" + month;
-		if (month < 10)
-			mon = "0" + mon;
-		String date = year + mon;
-		return date;
+		Time time = new TimeImpl();
+		return time.getYear()+time.getMonth()+ time.getDay();
 	}
 
 	private synchronized int getRows(){
