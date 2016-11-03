@@ -13,21 +13,21 @@ import java.sql.SQLException;
  * Created by geyao on 2016/10/29.
  */
 public class User {
-	private String Email;
+	private String Email = null;
 	private int id;
-	private String Password;
-	private String nickedName;
-	private String Sex;
-	private String CreatedTime;
+	private String Password = null;
+	private String nickedName = null;
+	private String Sex = null;
+	private String CreatedTime = null;
 	private int GameNumbers;
-	private String GameTableId;
-	private String PhoneNumber;
+	private String GameTableId = null;
+	private String PhoneNumber = null;
 	private int TotalGames;
 	private int WinNumbers;
 
-	private String Backup2;
-	private String Backup3;
-	private String Backup4;
+	private String Backup2 = null;
+	private String Backup3 = null;
+	private String Backup4 = null;
 
 	public String getEmail() {
 		return Email;

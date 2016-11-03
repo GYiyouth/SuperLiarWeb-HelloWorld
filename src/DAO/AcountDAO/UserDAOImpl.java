@@ -3,6 +3,7 @@ package DAO.AcountDAO;
 import DAO.com.util.db.DBUtils;
 import DAO.AcountDAO.VO.User;
 import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException;
+import smallTools.StringCheck;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -34,7 +35,7 @@ public class UserDAOImpl implements UserDAO {
 		}
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
-		String sql = "insert into sys.User(Email,PassWord,nickedName, CreatedTime) values(?,?,?,?);";
+		String sql = "insert into sys.User(Email,PassWord,nickedName, CreatedTime, PhoneNumber) values(?,?,?,?,?);";
 		try {
 			connection = DBUtils.getConnetction();
 			preparedStatement = connection.prepareStatement(sql);
@@ -42,9 +43,12 @@ public class UserDAOImpl implements UserDAO {
 			preparedStatement.setString(2, user.getPassword());
 			preparedStatement.setString(3, user.getNickedName());
 			preparedStatement.setString(4, user.getCreatedTime());
+			preparedStatement.setString(5, user.getPhoneNumber());
+
 			preparedStatement.executeUpdate();
 			user.setId(getId(user));
-//			createGameTable(user);
+			if (user.getId() !=0)
+				createGameTable(user);
 			return user.getId();
 		}catch (MySQLIntegrityConstraintViolationException e1){ // 用户已经存在
 			return 0;
@@ -307,12 +311,13 @@ public class UserDAOImpl implements UserDAO {
 	public void createGameTable(User user) throws SQLException{
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
-		String sql = "create table ? like sys.GamePattern ;";
+		String name = "Game"+user.getId();
+		String sql = "create table "+ name +" like sys.GamePattern ;";
 		try {
 			connection = DBUtils.getConnetction();
 			preparedStatement = connection.prepareStatement(sql);
-			String name = "Game"+user.getId();
-			preparedStatement.setString(1, name);
+
+//			preparedStatement.setString(1, name);
 			preparedStatement.execute();
 //			if (flag)
 //				return;

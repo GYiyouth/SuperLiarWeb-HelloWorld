@@ -29,7 +29,7 @@
     function failSQL()
     {
         alert("数据库连接失败，请联系葛尧");
-        window.location.href="log_sign_game/login2.jsp";
+        window.location.href="log_sign_game/login.jsp";
     }
     function failSign() {
         alert("注册失败");

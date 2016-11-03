@@ -34,10 +34,12 @@ public class Sign extends HttpServlet {
 					if (!userDAO.check(email, passWord1)){// 检查用户是否存在，存在返回true
 						User user = new User();
 						user.setEmail(email);
-						user.setPassword(email);
+						user.setPassword(passWord1);
 						user.setNickedName(nickedName);
 						Time time = new TimeImpl();
 						user.setCreatedTime(time.getDate());
+						if (StringCheck.phoneCheck(passWord1))
+							user.setPhoneNumber(phoneNumber);
 						userDAO.add(user);
 						user.setId(userDAO.getId(user));
 						request.setAttribute("user", user);
