@@ -246,9 +246,9 @@
 
         })();
 
-        function messageCenter_message(message, data) {
-            if(message == 'expandFrame') expand();
-            else if(message == 'getCollapseFrameOnLoad' && $axure.player.settings.startCollapsed && !MOBILE_DEVICE) $axure.messageCenter.postMessage('collapseFrameOnLoad');
+        function messageCenter_message(messageBean, data) {
+            if(messageBean == 'expandFrame') expand();
+            else if(messageBean == 'getCollapseFrameOnLoad' && $axure.player.settings.startCollapsed && !MOBILE_DEVICE) $axure.messageCenter.postMessage('collapseFrameOnLoad');
         }
 
         

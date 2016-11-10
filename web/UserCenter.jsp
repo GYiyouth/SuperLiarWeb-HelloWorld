@@ -19,7 +19,7 @@
 <body >
 <center>
     <h2>
-        <img src="pic/logo.jpg" height="300" width="560"><br>
+        <img src="${pageContext.request.contextPath}/pic/logo.jpg" height="300" width="560"><br>
     <%=nickedName%><br>
         你  好
     </h2>

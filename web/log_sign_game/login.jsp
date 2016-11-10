@@ -109,7 +109,7 @@
 
 <%--输入的表单在这！！！名字是 email passWord--%>
 
-    <form method="post" action="../Servlet.LogIn" name="login" onSubmit="return check()" accept-charset="UTF-8">
+    <form method="post" action="${pageContext.request.contextPath}/Servlet.LogIn" name="login" onSubmit="return check()" accept-charset="UTF-8">
         <!-- userNameBox (Group) -->
         <div id="u302" class="ax_default" data-label="userNameBox" data-width="240" data-height="34">
 

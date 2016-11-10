@@ -108,7 +108,7 @@ public class UserDAOImpl implements UserDAO {
 	public boolean update(int id, String column, String value) throws SQLException {
 		Connection connection = null;
 		PreparedStatement preparedStatement =null;
-		String sql = "update User set ? = ?  where id = ?;";
+		String sql = "update sys.User set ? = ?  where id = ?;";
 		try {
 			connection = DBUtils.getConnetction();
 			preparedStatement = connection.prepareStatement(sql);
@@ -136,7 +136,7 @@ public class UserDAOImpl implements UserDAO {
 	public boolean updatePassWord(int id, String PassWord) {
 		Connection connection = null;
 		PreparedStatement preparedStatement =null;
-		String sql = "update User set PassWord = ?  where id = ?;";
+		String sql = "update sys.User set PassWord = ?  where id = ?;";
 		try {
 			connection = DBUtils.getConnetction();
 			preparedStatement = connection.prepareStatement(sql);
@@ -162,7 +162,7 @@ public class UserDAOImpl implements UserDAO {
 	public boolean updatenickedName(int id, String nickedName) {
 		Connection connection = null;
 		PreparedStatement preparedStatement =null;
-		String sql = "update User set nickedName = ?  where id = ?;";
+		String sql = "update sys.User set nickedName = ?  where id = ?;";
 		try {
 			connection = DBUtils.getConnetction();
 			preparedStatement = connection.prepareStatement(sql);
