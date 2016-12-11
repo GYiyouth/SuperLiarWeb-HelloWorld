@@ -48,10 +48,8 @@ public class ProxyHandler implements InvocationHandler {
 
 		boolean resultFlag = true;
 		for (HashMap.Entry<String, InterceptorBean> entry : actionBean.getInterceptors().entrySet()) {
-//			System.out.println("Key = " + entry.getKey() + ", Value = " + entry.getValue());
 			Class interceptor = Class.forName(entry.getValue().getClassPath());
 			Method method1 = interceptor.getMethod(entry.getValue().getMethod(), HashMap.class);
-			System.out.println("拦截器的Class和方法为" + interceptor + method1);
 			Object itcptor_rst = method1.invoke(interceptor.newInstance(), hashMap);
 			System.out.println("拦截器第一次调用结果" + itcptor_rst);
 			if ( itcptor_rst== null) {
@@ -62,19 +60,16 @@ public class ProxyHandler implements InvocationHandler {
 			}
 		}
 
-		System.out.println("resultFlag标记是" + resultFlag);
+
 		if (resultFlag) {
 			result = method.invoke(tar, map);
-//			HttpSession session = (HttpSession) hashMap.get("session");
-			if (hashMap.containsKey("result")) {
-				hashMap.remove("result");
-
-				System.out.println("我看看哈希表到底有没有这个result1"+ hashMap.get("result"));
+			HttpSession session = (HttpSession) hashMap.get("session");
+			if (session.getAttribute(actionBean.getName())!= null) {
+				session.removeAttribute(actionBean.getName());
 			}
-			hashMap.put("result", result);
+			session.setAttribute(actionBean.getName(), result);
 		}
 
-		System.out.println("我看看哈希表到底有没有这个result2"+ hashMap.get("result"));
 		for (HashMap.Entry<String, InterceptorBean> entry : actionBean.getInterceptors().entrySet()) {
 			Class interceptor = Class.forName(entry.getValue().getClassPath());
 			Method method1 = interceptor.getMethod(entry.getValue().getMethod(), HashMap.class);

@@ -67,16 +67,9 @@ public class LoginControllerServlet extends HttpServlet {
 				hashMap.put("request", request);
 				hashMap.put("session", request.getSession());
 
-//				hashMap.put("interceptor", )
 
 				String resultName = method.invoke(obj, hashMap).toString();
-//				Map[] maps = new Map[1];
-//				maps[0] = map;
-//				actionProxy.invoke(actionProxy, method, maps);
 
-				//逻辑层方法返回值
-//				String resultName = method.invoke(servlet.newInstance(), map).toString();
-				//如果results包含上述返回值
 
 				/**
 				 * 这里做的不好，只能用于forward和redirect两种方法

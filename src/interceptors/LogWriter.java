@@ -39,8 +39,8 @@ public class LogWriter {
 			Time time = new TimeImpl();
 			String endTime = time.getTime();
 			String result;
-			if (hashMap.containsKey("result")) {
-				result = hashMap.get("result").toString();
+			if (session.getAttribute(actionBean.getName()) != null){
+				result = session.getAttribute(actionBean.getName()).toString();
 			}else {
 				result = "拦截未通过";
 			}
