@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <component inherit-compiler-output="true" inheritJdk="true">
-	<output-Servlet.test url="file://$MODULE_DIR$/../out/Servlet.test/Servlet.HelloWorld"/>
+	<output-Servlet.test url="file://$MODULE_DIR$/../out/Servlet.test/Servlet.UserCenter"/>
 	<exclude-output/>
 	<contentEntry url="file://$MODULE_DIR$"/>
 	<lib name="Tomcat 8.5.5" scope="PROVIDED"/>

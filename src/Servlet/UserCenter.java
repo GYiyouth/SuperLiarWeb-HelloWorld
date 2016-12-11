@@ -10,8 +10,8 @@ import java.io.IOException;
 /**
  * Created by geyao on 2016/10/16.
  */
-//@WebServlet(name = "Servlet.HelloWorld")
-public class HelloWorld extends HttpServlet {
+//@WebServlet(name = "Servlet.UserCenter")
+public class UserCenter extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
 		response.setCharacterEncoding("UTF-8");

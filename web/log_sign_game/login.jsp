@@ -109,7 +109,7 @@
 
 <%--输入的表单在这！！！名字是 email passWord--%>
 
-    <form method="post" action="${pageContext.request.contextPath}/Servlet.LogIn" name="login" onSubmit="return check()" accept-charset="UTF-8">
+    <form method="post" action="${pageContext.request.contextPath}/Login.scaction" name="login" onSubmit="return check()" accept-charset="UTF-8">
         <!-- userNameBox (Group) -->
         <div id="u302" class="ax_default" data-label="userNameBox" data-width="240" data-height="34">
 
@@ -124,7 +124,7 @@
 
             <!-- Email (Text Field) -->
             <div id="u305" class="ax_default text_field">
-                <input id="u305_input" type="email" value="" maxlength="32" name="email" />
+                <input id="u305_input" type="email" value="" maxlength="32" name="userName" />
             </div>
         </div>
         <!-- passWordBox (Group) -->
@@ -141,7 +141,7 @@
             <!-- Unnamed (Text Field) -->
             <div id="u301" class="ax_default text_field">
 
-                    <input id="u301_input" type="password" value="" maxlength="32" name="passWord"/>
+                    <input id="u301_input" type="password" value="" maxlength="32" name="password"/>
 
             </div>
         </div>

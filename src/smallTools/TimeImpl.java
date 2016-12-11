@@ -77,4 +77,10 @@ public class TimeImpl implements Time{
 		String second = String.format("%tS", date);
 		return second;
 	}
+
+	public String getTime(){
+		Date date = new Date();
+		return String.format("%tY-%tm-%td  %tH:%tM:%tS", date,date,date,date,date,date);
+	}
+
 }

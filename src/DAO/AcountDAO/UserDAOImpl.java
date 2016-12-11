@@ -1,9 +1,8 @@
 package DAO.AcountDAO;
 
+import DAO.AcountDAO.VO.UserBean;
 import DAO.com.util.db.DBUtils;
-import DAO.AcountDAO.VO.User;
 import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException;
-import smallTools.StringCheck;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -18,14 +17,14 @@ public class UserDAOImpl implements UserDAO {
 	/**
 	 * 先检查用户是否已经存在，存在返回0
 	 * 添加用户，同时为他创建他的游戏table，table名字为 "Game" + UserId
-	 * @param user
+	 * @param userBean
 	 * @return
 	 * @throws SQLException
 	 */
 	@Override
-	public int add(User user) throws SQLException {
-		String email = user.getEmail();
-		String passWord = user.getPassword();
+	public int add(UserBean userBean) throws SQLException {
+		String email = userBean.getEmail();
+		String passWord = userBean.getPassword();
 		try{
 			if (check(email, passWord))
 				return 0;
@@ -39,17 +38,17 @@ public class UserDAOImpl implements UserDAO {
 		try {
 			connection = DBUtils.getConnetction();
 			preparedStatement = connection.prepareStatement(sql);
-			preparedStatement.setString(1, user.getEmail());
-			preparedStatement.setString(2, user.getPassword());
-			preparedStatement.setString(3, user.getNickedName());
-			preparedStatement.setString(4, user.getCreatedTime());
-			preparedStatement.setString(5, user.getPhoneNumber());
+			preparedStatement.setString(1, userBean.getEmail());
+			preparedStatement.setString(2, userBean.getPassword());
+			preparedStatement.setString(3, userBean.getNickedName());
+			preparedStatement.setString(4, userBean.getCreatedTime());
+			preparedStatement.setString(5, userBean.getPhoneNumber());
 
 			preparedStatement.executeUpdate();
-			user.setId(getId(user));
-			if (user.getId() !=0)
-				createGameTable(user);
-			return user.getId();
+			userBean.setId(getId(userBean));
+			if (userBean.getId() !=0)
+				createGameTable(userBean);
+			return userBean.getId();
 		}catch (MySQLIntegrityConstraintViolationException e1){ // 用户已经存在
 			return 0;
 		}
@@ -186,11 +185,11 @@ public class UserDAOImpl implements UserDAO {
 	/**
 	 * 根据id返回对应的用户，不存在则返回null
 	 * @param id
-	 * @return User
+	 * @return UserBean
 	 * @throws SQLException
 	 */
 	@Override
-	public User findById(int id) throws SQLException {      //根据ID返回User，不存在则返回null
+	public UserBean findById(int id) throws SQLException {      //根据ID返回User，不存在则返回null
 		Connection connection = null;
 		PreparedStatement preparedStatement =null;
 		ResultSet resultSet = null;
@@ -203,22 +202,22 @@ public class UserDAOImpl implements UserDAO {
 			if (!exist)
 				return null;
 			resultSet = preparedStatement.getResultSet();
-			User user = new User();
-			user.setEmail(resultSet.getString("Email"));
-			user.setId(resultSet.getInt("id"));
-			user.setPassword(resultSet.getString("PassWord"));
-			user.setNickedName(resultSet.getString("nickedName"));
-			user.setSex(resultSet.getString("Sex"));
-			user.setCreatedTime(resultSet.getString("CreatedTime"));
-			user.setGameNumbers(resultSet.getInt("GameNumbers"));
-			user.setGameTableId(resultSet.getString("GameTableId"));
-			user.setPhoneNumber(resultSet.getString("PhoneNumber"));
-			user.setTotalGames(resultSet.getInt("TotalGames"));
-			user.setWinNumbers(resultSet.getInt("WinNumbers"));
-			user.setBackup2(resultSet.getString("Backup2"));
-			user.setBackup3(resultSet.getString("Backup3"));
-			user.setBackup4(resultSet.getString("Backup4"));
-			return user;
+			UserBean userBean = new UserBean();
+			userBean.setEmail(resultSet.getString("Email"));
+			userBean.setId(resultSet.getInt("id"));
+			userBean.setPassword(resultSet.getString("PassWord"));
+			userBean.setNickedName(resultSet.getString("nickedName"));
+			userBean.setSex(resultSet.getString("Sex"));
+			userBean.setCreatedTime(resultSet.getString("CreatedTime"));
+			userBean.setGameNumbers(resultSet.getInt("GameNumbers"));
+			userBean.setGameTableId(resultSet.getString("GameTableId"));
+			userBean.setPhoneNumber(resultSet.getString("PhoneNumber"));
+			userBean.setTotalGames(resultSet.getInt("TotalGames"));
+			userBean.setWinNumbers(resultSet.getInt("WinNumbers"));
+			userBean.setBackup2(resultSet.getString("Backup2"));
+			userBean.setBackup3(resultSet.getString("Backup3"));
+			userBean.setBackup4(resultSet.getString("Backup4"));
+			return userBean;
 		}catch (SQLException e){
 			e.printStackTrace();
 			return null;
@@ -235,7 +234,7 @@ public class UserDAOImpl implements UserDAO {
 	 * @throws SQLException
 	 */
 	@Override
-	public User findByAccount(String Email, String PassWord) throws SQLException {
+	public UserBean findByAccount(String Email, String PassWord) throws SQLException {
 		Connection connection = null;
 		PreparedStatement preparedStatement =null;
 		ResultSet resultSet = null;
@@ -248,27 +247,27 @@ public class UserDAOImpl implements UserDAO {
 //			preparedStatement.execute();
 			resultSet = preparedStatement.executeQuery();
 			if ( !resultSet.next() ) {      // 为空集时，resultSet.next()返回false
-				User user = new User();
-				user.setId(0);
-				return user;
+				UserBean userBean = new UserBean();
+				userBean.setId(0);
+				return userBean;
 			}
 
-			User user = new User();
-			user.setEmail(resultSet.getString("Email"));
-			user.setId(resultSet.getInt("id"));
-			user.setPassword(resultSet.getString("PassWord"));
-			user.setNickedName(resultSet.getString("nickedName"));
-			user.setSex(resultSet.getString("Sex"));
-			user.setCreatedTime(resultSet.getString("CreatedTime"));
-			user.setGameNumbers(resultSet.getInt("GameNumbers"));
-			user.setGameTableId(resultSet.getString("GameTableId"));
-			user.setPhoneNumber(resultSet.getString("PhoneNumber"));
-			user.setTotalGames(resultSet.getInt("TotalGames"));
-			user.setWinNumbers(resultSet.getInt("WinNumbers"));
-			user.setBackup2(resultSet.getString("Backup2"));
-			user.setBackup3(resultSet.getString("Backup3"));
-			user.setBackup4(resultSet.getString("Backup4"));
-			return user;
+			UserBean userBean = new UserBean();
+			userBean.setEmail(resultSet.getString("Email"));
+			userBean.setId(resultSet.getInt("id"));
+			userBean.setPassword(resultSet.getString("PassWord"));
+			userBean.setNickedName(resultSet.getString("nickedName"));
+			userBean.setSex(resultSet.getString("Sex"));
+			userBean.setCreatedTime(resultSet.getString("CreatedTime"));
+			userBean.setGameNumbers(resultSet.getInt("GameNumbers"));
+			userBean.setGameTableId(resultSet.getString("GameTableId"));
+			userBean.setPhoneNumber(resultSet.getString("PhoneNumber"));
+			userBean.setTotalGames(resultSet.getInt("TotalGames"));
+			userBean.setWinNumbers(resultSet.getInt("WinNumbers"));
+			userBean.setBackup2(resultSet.getString("Backup2"));
+			userBean.setBackup3(resultSet.getString("Backup3"));
+			userBean.setBackup4(resultSet.getString("Backup4"));
+			return userBean;
 		}catch (SQLException e){
 			e.printStackTrace();
 			return null;
@@ -308,10 +307,10 @@ public class UserDAOImpl implements UserDAO {
 	 * Game + UserId
 	 * 在add用户时会被调用*/
 	@Override
-	public void createGameTable(User user) throws SQLException{
+	public void createGameTable(UserBean userBean) throws SQLException{
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
-		String name = "Game"+user.getId();
+		String name = "Game"+ userBean.getId();
 		String sql = "create table "+ name +" like sys.GamePattern ;";
 		try {
 			connection = DBUtils.getConnetction();
@@ -332,11 +331,11 @@ public class UserDAOImpl implements UserDAO {
 
 	/**
 	 * 返回用户的id
-	 * @param user
+	 * @param userBean
 	 * @return
 	 */
 	@Override
-	public int getId(User user) {
+	public int getId(UserBean userBean) {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
@@ -344,8 +343,8 @@ public class UserDAOImpl implements UserDAO {
 		try {
 			connection = DBUtils.getConnetction();
 			preparedStatement = connection.prepareStatement(sql);
-			preparedStatement.setString(1, user.getEmail());
-			preparedStatement.setString(2, user.getPassword());
+			preparedStatement.setString(1, userBean.getEmail());
+			preparedStatement.setString(2, userBean.getPassword());
 			resultSet = preparedStatement.executeQuery();
 			resultSet.next();
 			int id = resultSet.getInt(1);
@@ -357,7 +356,7 @@ public class UserDAOImpl implements UserDAO {
 	}
 
 	@Override
-	public List<User> findAll() throws SQLException {
+	public List<UserBean> findAll() throws SQLException {
 		return null;
 	}
 }

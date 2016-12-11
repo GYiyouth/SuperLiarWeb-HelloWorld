@@ -4,18 +4,18 @@
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
          version="3.1">
     <servlet-mapping>
-        <servlet-name>HelloWorld</servlet-name>
-        <url-pattern>/Servlet.HelloWorld</url-pattern>
+        <servlet-name>UserCenter</servlet-name>
+        <url-pattern>/Servlet.UserCenter</url-pattern>
     </servlet-mapping>
     <servlet>
-        <servlet-name>HelloWorld</servlet-name>
-        <servlet-class>Servlet.HelloWorld</servlet-class>
+        <servlet-name>UserCenter</servlet-name>
+        <servlet-class>Servlet.UserCenter</servlet-class>
     </servlet>
 
 
     <servlet-mapping>
         <servlet-name>LogIn</servlet-name>
-        <url-pattern>/Servlet.LogIn</url-pattern>
+        <url-pattern>*.LogIn</url-pattern>
     </servlet-mapping>
     <servlet>
         <servlet-name>LogIn</servlet-name>
@@ -31,6 +31,16 @@
     <servlet>
         <servlet-name>Sign</servlet-name>
         <servlet-class>Servlet.Sign</servlet-class>
+    </servlet>
+
+    <!--J2EE第二次作业用到的手工拦截器-->
+    <servlet-mapping>
+        <servlet-name>LoginController</servlet-name>
+        <url-pattern>*.scaction</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>LoginController</servlet-name>
+        <servlet-class>Servlet.LoginControllerServlet</servlet-class>
     </servlet>
 
 

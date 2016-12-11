@@ -9,7 +9,7 @@ import java.sql.SQLException;
 
 import DAO.AcountDAO.UserDAO;
 import DAO.AcountDAO.UserDAOImpl;
-import DAO.AcountDAO.VO.User;
+import DAO.AcountDAO.VO.UserBean;
 import smallTools.*;
 
 /**
@@ -32,31 +32,31 @@ public class Sign extends HttpServlet {
 				UserDAO userDAO = new UserDAOImpl();
 				try {
 					if (!userDAO.check(email, passWord1)){// 检查用户是否存在，存在返回true
-						User user = new User();
-						user.setEmail(email);
-						user.setPassword(passWord1);
-						user.setNickedName(nickedName);
+						UserBean userBean = new UserBean();
+						userBean.setEmail(email);
+						userBean.setPassword(passWord1);
+						userBean.setNickedName(nickedName);
 						Time time = new TimeImpl();
-						user.setCreatedTime(time.getDate());
+						userBean.setCreatedTime(time.getDate());
 						if (StringCheck.phoneCheck(passWord1))
-							user.setPhoneNumber(phoneNumber);
-						userDAO.add(user);
-						user.setId(userDAO.getId(user));
-						request.setAttribute("user", user);
+							userBean.setPhoneNumber(phoneNumber);
+						userDAO.add(userBean);
+						userBean.setId(userDAO.getId(userBean));
+						request.setAttribute("userBean", userBean);
 						request.getRequestDispatcher("UserCenter.jsp").forward(request, response);
 						return;
 					}
 				} catch (SQLException e) {
 					e.printStackTrace();
 					request.setAttribute("flag", 2);
-					request.getRequestDispatcher("log_sign_game/LogSignFailed.jsp").forward(request, response);
+					request.getRequestDispatcher("log_sign_game/LogSignJump.jsp").forward(request, response);
 					return;
 				}
 			}
 		}
 		System.out.println("登录失败");
 		request.setAttribute("flag", 3);
-		request.getRequestDispatcher("log_sign_game/LogSignFailed.jsp").forward(request, response);
+		request.getRequestDispatcher("log_sign_game/LogSignJump.jsp").forward(request, response);
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

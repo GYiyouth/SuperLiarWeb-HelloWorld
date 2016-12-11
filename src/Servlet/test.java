@@ -2,8 +2,7 @@ package Servlet;
 
 import DAO.AcountDAO.UserDAO;
 import DAO.AcountDAO.UserDAOImpl;
-import DAO.AcountDAO.VO.User;
-import smallTools.TimeImpl;
+import DAO.AcountDAO.VO.UserBean;
 
 import java.sql.SQLException;
 import java.util.Calendar;
@@ -15,14 +14,14 @@ public class test {
 	public static void main(String[] args){
 		UserDAO userDAO = new UserDAOImpl();
 //		try {
-//			User user = new User("kuailegeyao@qq.com", "gyiyouth1995", "蜡笔小丑", null, null);
+//			UserBean user = new UserBean("kuailegeyao@qq.com", "gyiyouth1995", "蜡笔小丑", null, null);
 //			System.out.println(userDAO.add(user));
 //		} catch (SQLException e) {
 //			e.printStackTrace();
 //		}
 		try {
-			User user = userDAO.findByAccount("544311417@qq.com", "gyiyouth1995");
-			System.out.println(user.getNickedName());
+			UserBean userBean = userDAO.findByAccount("544311417@qq.com", "gyiyouth1995");
+			System.out.println(userBean.getNickedName());
 			return;
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -79,8 +78,8 @@ public class test {
 		UserDAO userDAO2 = new UserDAOImpl();
 		try {
 
-			User user2 = userDAO2.findByAccount(email, password);
-			System.out.println(user2.getId());
+			UserBean userBean2 = userDAO2.findByAccount(email, password);
+			System.out.println(userBean2.getId());
 
 			return userDAO2.check(email, password);
 		} catch (SQLException e) {

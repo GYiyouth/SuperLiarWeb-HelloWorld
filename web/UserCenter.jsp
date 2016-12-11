@@ -1,6 +1,7 @@
-<%@ page import="DAO.AcountDAO.VO.User" %><%--
+<%@ page import="DAO.AcountDAO.VO.UserBean" %>
+<%@ page import="java.util.Map" %><%--
   Created by IntelliJ IDEA.
-  User: geyao
+  UserBean: geyao
   Date: 2016/11/1
   TimeImpl: 下午9:19
   To change this template use File | Settings | File Templates.
@@ -9,10 +10,13 @@
 <html>
 <head>
     <%
-        User user = (User) request.getAttribute("user");
-        String email = user.getEmail();
-        String nickedName = user.getNickedName();
-        int id = user.getId();
+        Map<String, String[]> map = (Map<String, String[]>) request.getAttribute("map");
+        String userName = map.get("userName")[0].toString();
+
+//        UserBean userBean = (UserBean) request.getAttribute("userBean");
+//        String email = userBean.getEmail();
+//        String nickedName = userBean.getNickedName();
+//        int id = userBean.getId();
     %>
     <title>SuperLiar</title>
 </head>
@@ -20,11 +24,11 @@
 <center>
     <h2>
         <img src="${pageContext.request.contextPath}/pic/logo.jpg" height="300" width="560"><br>
-    <%=nickedName%><br>
+    <%=userName%><br>
         你  好
     </h2>
     <h1>
-        <%=id%><br>
+        <%=userName%><br>
     </h1>
     <h3>
         这是你的id，他将永远被保存<br>

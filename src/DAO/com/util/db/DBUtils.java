@@ -1,9 +1,5 @@
 package DAO.com.util.db;
 
-import DAO.AcountDAO.UserDAO;
-import DAO.AcountDAO.UserDAOImpl;
-import DAO.AcountDAO.VO.User;
-
 import java.sql.*;
 import java.util.ResourceBundle;
 
@@ -72,7 +68,7 @@ public class DBUtils {
 //		UserDAO userDAO = new UserDAOImpl();
 //		try {
 //
-//			User user = userDAO.findByAccount("1", "2");
+//			UserBean user = userDAO.findByAccount("1", "2");
 //			System.out.println(user.getId());
 //			System.out.println(userDAO.check("1", "1"));
 //		} catch (SQLException e) {

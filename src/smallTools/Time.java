@@ -11,4 +11,5 @@ public interface Time {
 	public String getMinute();
 	public String getSecond();
 	public String getDate();
+	public String getTime();
 }

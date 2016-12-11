@@ -9,10 +9,10 @@ import smallTools.TimeImpl;
 import java.sql.SQLException;
 
 /**
- * 构造函数，要传入的数据按顺序为邮箱，密码，昵称
+ * 有参构造函数，要传入的数据按顺序为邮箱，密码，昵称
  * Created by geyao on 2016/10/29.
  */
-public class User {
+public class UserBean {
 	private String Email = null;
 	private int id;
 	private String Password = null;
@@ -24,7 +24,6 @@ public class User {
 	private String PhoneNumber = null;
 	private int TotalGames;
 	private int WinNumbers;
-
 	private String Backup2 = null;
 	private String Backup3 = null;
 	private String Backup4 = null;
@@ -141,7 +140,7 @@ public class User {
 		Backup4 = backup4;
 	}
 
-//	public User(String email, String password, String nickedName,
+//	public UserBean(String email, String password, String nickedName,
 //	            @Nullable String phoneNumber, @Nullable String sex) throws SQLException {
 //		Email = email;
 //
@@ -163,7 +162,7 @@ public class User {
 //		}
 //		this.id = getRows();
 //	}
-	public User(){
+	public UserBean(){
 		super();
 	}
 
